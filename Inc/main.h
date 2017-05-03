@@ -53,6 +53,8 @@
 
 #define B1_Pin GPIO_PIN_13
 #define B1_GPIO_Port GPIOC
+#define FAKE_CLK_Pin GPIO_PIN_0
+#define FAKE_CLK_GPIO_Port GPIOA
 #define BRK_ADC_Pin GPIO_PIN_1
 #define BRK_ADC_GPIO_Port GPIOA
 #define USART_TX_Pin GPIO_PIN_2
@@ -67,6 +69,8 @@
 #define TMS_GPIO_Port GPIOA
 #define TCK_Pin GPIO_PIN_14
 #define TCK_GPIO_Port GPIOA
+#define FAKE_DO_Pin GPIO_PIN_15
+#define FAKE_DO_GPIO_Port GPIOA
 #define SWO_Pin GPIO_PIN_3
 #define SWO_GPIO_Port GPIOB
 

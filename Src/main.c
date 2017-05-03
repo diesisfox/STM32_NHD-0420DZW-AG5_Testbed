@@ -118,6 +118,8 @@ int main(void)
   MX_SPI3_Init();
 
   /* USER CODE BEGIN 2 */
+  Oled_begin(&hspi3);
+  Oled_writeCatDataSync(12,"Hello world!");
 
   /* USER CODE END 2 */
 
@@ -354,7 +356,7 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOD_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(SCREEN_CS_GPIO_Port, SCREEN_CS_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(GPIOA, FAKE_CLK_Pin|SCREEN_CS_Pin|FAKE_DO_Pin, GPIO_PIN_SET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_RESET);
@@ -375,12 +377,17 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : PA0 BRK_ADC_Pin PA6 PA7 
-                           PA8 PA9 PA10 PA11 
-                           PA12 PA15 */
-  GPIO_InitStruct.Pin = GPIO_PIN_0|BRK_ADC_Pin|GPIO_PIN_6|GPIO_PIN_7 
-                          |GPIO_PIN_8|GPIO_PIN_9|GPIO_PIN_10|GPIO_PIN_11 
-                          |GPIO_PIN_12|GPIO_PIN_15;
+  /*Configure GPIO pins : FAKE_CLK_Pin FAKE_DO_Pin */
+  GPIO_InitStruct.Pin = FAKE_CLK_Pin|FAKE_DO_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_OD;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : BRK_ADC_Pin PA6 PA7 PA8 
+                           PA9 PA10 PA11 PA12 */
+  GPIO_InitStruct.Pin = BRK_ADC_Pin|GPIO_PIN_6|GPIO_PIN_7|GPIO_PIN_8 
+                          |GPIO_PIN_9|GPIO_PIN_10|GPIO_PIN_11|GPIO_PIN_12;
   GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
@@ -435,7 +442,8 @@ void doApplication(void const * argument)
   /* Infinite loop */
   for(;;)
   {
-    osDelay(1);
+	  Oled_writeOneData('F');
+    osDelay(1000);
   }
   /* USER CODE END 5 */ 
 }
