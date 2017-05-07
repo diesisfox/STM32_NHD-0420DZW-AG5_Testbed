@@ -26,9 +26,9 @@
 //this is for writing a string literal:
 //#define Serial2_writeStr(str) Serial2_writeStr_Buf=(str); Serial2_writeBytes(Serial2_writeStr_Buf, sizeof((str))-1)
 
-uint8_t Serial2_writeStr_Buf[SERIAL2_BUFFER_SIZE_TX];
+extern uint8_t Serial2_writeStr_Buf[SERIAL2_BUFFER_SIZE_TX];
 
-uint8_t Serial2_buffer[SERIAL2_BUFFER_SIZE_RX];
+extern uint8_t Serial2_buffer[SERIAL2_BUFFER_SIZE_RX];
 
 void Serial2_begin();
 int Serial2_available();
